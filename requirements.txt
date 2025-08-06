@@ -11,3 +11,4 @@ fpdf==1.7.2
 pydeck
 altair
 plotly
+IPython
