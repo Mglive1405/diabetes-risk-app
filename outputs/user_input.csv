@@ -1,0 +1,2 @@
+Pregnancies,Glucose,BloodPressure,SkinThickness,Insulin,BMI,DiabetesPedigreeFunction,Age,RiskProbability,RiskLabel
+0,150,120,40,150,53.33,0.5,60,0.9791840397711074,High
