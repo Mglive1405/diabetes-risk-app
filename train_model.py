@@ -123,7 +123,7 @@ print(f"  Mean AUC: {cv_scores.mean():.4f} ± {cv_scores.std():.4f}")
 import os
 os.makedirs("models", exist_ok=True)
 
-pkl_path = "models/diabetes_model.pkl"
+pkl_path = "docs/diabetes_model.pkl"
 joblib.dump(model, pkl_path)
 print(f"\n✅ Model saved: {pkl_path}")
 
@@ -167,8 +167,9 @@ graph = helper.make_graph(
 
 opset = helper.make_operatorsetid("", 15)
 onnx_model = helper.make_model(graph, producer_name='diabetesiq-custom', opset_imports=[opset])
+onnx_model.ir_version = 8
 
-onnx_path = "models/diabetes_model.onnx"
+onnx_path = "docs/diabetes_model.onnx"
 onnx.save(onnx_model, onnx_path)
 
 print(f"✅ Custom ONNX model saved (without ML-domain dependencies): {onnx_path}")
@@ -222,7 +223,7 @@ metadata = {
     }
 }
 
-meta_path = "models/model_metadata.json"
+meta_path = "docs/model_metadata.json"
 with open(meta_path, "w") as f:
     json.dump(metadata, f, indent=2)
 

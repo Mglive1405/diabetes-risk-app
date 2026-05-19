@@ -1,0 +1,28 @@
+{
+  "features": [
+    "Pregnancies",
+    "Glucose",
+    "BloodPressure",
+    "SkinThickness",
+    "Insulin",
+    "BMI",
+    "DiabetesPedigreeFunction",
+    "Age"
+  ],
+  "metrics": {
+    "accuracy": 0.7115,
+    "precision": 0.6,
+    "recall": 0.5455,
+    "f1_score": 0.5714,
+    "roc_auc": 0.8135,
+    "cv_auc_mean": 0.8309,
+    "cv_auc_std": 0.016
+  },
+  "training": {
+    "algorithm": "LogisticRegression",
+    "train_samples": 622,
+    "test_samples": 156,
+    "total_samples": 778,
+    "positive_ratio": 0.3496
+  }
+}
