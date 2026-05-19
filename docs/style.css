@@ -152,6 +152,11 @@ body {
   color: var(--text-primary); font-size: 1rem; font-family: var(--font);
   transition: var(--transition); outline: none;
 }
+.form-input[type="number"]::-webkit-inner-spin-button, 
+.form-input[type="number"]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; margin: 0; 
+}
+.form-input[type="number"] { -moz-appearance: textfield; }
 .form-input:focus { border-color: var(--accent-1); box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.15); }
 .form-input:hover { border-color: rgba(255,255,255,0.15); }
 .form-input.small { width: 48%; }
@@ -171,14 +176,14 @@ body {
 .gender-icon { font-size: 1.1rem; }
 
 /* BMI Calc */
-.bmi-calc { display: flex; gap: 16px; align-items: stretch; height: 48px; }
-.bmi-inputs { display: flex; gap: 12px; flex: 1; }
-.bmi-inputs .form-input { height: 100%; margin: 0; }
+.bmi-calc { display: flex; gap: 12px; align-items: stretch; height: 48px; }
+.bmi-inputs { display: flex; gap: 8px; flex: 1; }
+.bmi-inputs .form-input { height: 100%; margin: 0; flex: 1; padding: 12px 8px; text-align: center; }
 .bmi-result {
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  padding: 0 20px; border-radius: var(--radius-sm);
+  padding: 0 16px; border-radius: var(--radius-sm);
   background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3);
-  min-width: 90px; height: 100%;
+  min-width: 85px; height: 100%;
 }
 .bmi-value { font-size: 1.3rem; font-weight: 700; color: var(--accent-2); line-height: 1.2; }
 .bmi-label { font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
