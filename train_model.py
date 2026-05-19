@@ -71,16 +71,13 @@ print(f"Test:  {X_test.shape[0]} samples")
 
 # ─── 5. Train Model ────────────────────────────────────────────────────────────
 print("\n" + "=" * 60)
-print("TRAINING GRADIENT BOOSTING CLASSIFIER")
+print("TRAINING LOGISTIC REGRESSION")
 print("=" * 60)
 
-model = GradientBoostingClassifier(
-    n_estimators=200,
-    learning_rate=0.1,
-    max_depth=4,
-    min_samples_split=10,
-    min_samples_leaf=5,
-    subsample=0.8,
+from sklearn.linear_model import LogisticRegression
+
+model = LogisticRegression(
+    max_iter=1000,
     random_state=42
 )
 
@@ -130,26 +127,51 @@ pkl_path = "models/diabetes_model.pkl"
 joblib.dump(model, pkl_path)
 print(f"\n✅ Model saved: {pkl_path}")
 
-# ─── 9. Export to ONNX ─────────────────────────────────────────────────────────
-print("\n" + "=" * 60)
-print("PHASE 3: ONNX EXPORT")
-print("=" * 60)
+import onnx
+from onnx import helper, TensorProto
 
-from skl2onnx import convert_sklearn
-from skl2onnx.common.data_types import FloatTensorType
-
-initial_type = [("float_input", FloatTensorType([None, len(FEATURE_NAMES)]))]
-
-onnx_model = convert_sklearn(
-    model, initial_types=initial_type,
-    options={type(model): {"zipmap": False}}
+w_tensor = helper.make_tensor(
+    name='W',
+    data_type=TensorProto.FLOAT,
+    dims=[len(FEATURE_NAMES), 1],
+    vals=model.coef_.flatten().tolist()
 )
 
-onnx_path = "models/diabetes_model.onnx"
-with open(onnx_path, "wb") as f:
-    f.write(onnx_model.SerializeToString())
+b_tensor = helper.make_tensor(
+    name='B',
+    data_type=TensorProto.FLOAT,
+    dims=[1],
+    vals=model.intercept_.tolist()
+)
 
-print(f"✅ ONNX model saved: {onnx_path}")
+gemm_node = helper.make_node(
+    'Gemm',
+    inputs=['float_input', 'W', 'B'],
+    outputs=['gemm_out'],
+    transB=0
+)
+
+sigmoid_node = helper.make_node(
+    'Sigmoid',
+    inputs=['gemm_out'],
+    outputs=['probabilities']
+)
+
+graph = helper.make_graph(
+    nodes=[gemm_node, sigmoid_node],
+    name='diabetes_logistic_regression',
+    inputs=[helper.make_tensor_value_info('float_input', TensorProto.FLOAT, [None, len(FEATURE_NAMES)])],
+    outputs=[helper.make_tensor_value_info('probabilities', TensorProto.FLOAT, [None, 1])],
+    initializer=[w_tensor, b_tensor]
+)
+
+opset = helper.make_operatorsetid("", 15)
+onnx_model = helper.make_model(graph, producer_name='diabetesiq-custom', opset_imports=[opset])
+
+onnx_path = "models/diabetes_model.onnx"
+onnx.save(onnx_model, onnx_path)
+
+print(f"✅ Custom ONNX model saved (without ML-domain dependencies): {onnx_path}")
 
 # ─── 10. Verify ONNX Predictions Match ─────────────────────────────────────────
 import onnxruntime as ort
@@ -165,7 +187,7 @@ orig_probs = model.predict_proba(test_samples)[:, 1]
 
 # ONNX predictions
 onnx_results = sess.run(None, {input_name: test_samples})
-onnx_probs = onnx_results[1][:, 1]
+onnx_probs = onnx_results[0].flatten()
 
 print(f"\nPrediction Comparison (first 5 test samples):")
 print(f"  Original:  {np.round(orig_probs, 4)}")
@@ -192,10 +214,7 @@ metadata = {
         "cv_auc_std": round(cv_scores.std(), 4),
     },
     "training": {
-        "algorithm": "GradientBoostingClassifier",
-        "n_estimators": 200,
-        "learning_rate": 0.1,
-        "max_depth": 4,
+        "algorithm": "LogisticRegression",
         "train_samples": int(X_train.shape[0]),
         "test_samples": int(X_test.shape[0]),
         "total_samples": int(combined.shape[0]),
