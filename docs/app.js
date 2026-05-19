@@ -39,6 +39,8 @@ const HEALTH_TIPS = {
 // ─── Initialize ONNX ────────────────────────────────────────────────────
 async function initModel() {
   try {
+    // Disable multi-threading to prevent WASM exceptions in non-cross-origin-isolated environments (e.g. GitHub Pages)
+    ort.env.wasm.numThreads = 1;
     session = await ort.InferenceSession.create('./diabetes_model.onnx');
     console.log('ONNX model loaded successfully');
   } catch (e) {
