@@ -1,10 +1,12 @@
 /* ═══════════════ DiabetesIQ — Client-Side ML Inference ═══════════════ */
 
-// Configure ONNX Runtime Web WebAssembly path and settings globally before any session calls
 if (typeof ort !== 'undefined') {
   ort.env.wasm.numThreads = 1;
   ort.env.wasm.proxy = false;
-  ort.env.wasm.wasmPaths = './';
+  ort.env.wasm.wasmPaths = {
+    "ort-wasm.wasm": "./ort-wasm.wasm",
+    "ort-wasm-simd.wasm": "./ort-wasm-simd.wasm"
+  };
 }
 
 // ─── State ──────────────────────────────────────────────────────────────
@@ -45,13 +47,41 @@ const HEALTH_TIPS = {
 
 // ─── Initialize ONNX ────────────────────────────────────────────────────
 async function initModel() {
+  console.log('Model loading started...');
   try {
-    session = await ort.InferenceSession.create('./diabetes_model.onnx');
+    session = await ort.InferenceSession.create('../models/diabetes_model.onnx');
     console.log('ONNX model loaded successfully');
+    
+    // Hide UI error if model loads
+    const errorEl = document.getElementById('model-error');
+    if (errorEl) errorEl.classList.add('hidden');
+    
+    // Enable submit button
+    const btn = document.getElementById('submit-btn');
+    const btnText = document.getElementById('btn-text');
+    if (btn) {
+      btn.disabled = false;
+      btn.classList.remove('loading');
+    }
+    if (btnText) {
+      btnText.textContent = 'Analyze Risk';
+    }
   } catch (e) {
     console.error('Failed to load ONNX model:', e);
-    alert('Failed to load AI model. Please refresh the page.');
+    
+    // Show real error message in UI instead of alert
+    const errorEl = document.getElementById('model-error') || createErrorBanner();
+    errorEl.textContent = `Error loading AI model: ${e.message || e}. Please check console.`;
+    errorEl.classList.remove('hidden');
   }
+}
+
+function createErrorBanner() {
+  const banner = document.createElement('div');
+  banner.id = 'model-error';
+  banner.className = 'error-banner';
+  document.body.prepend(banner);
+  return banner;
 }
 
 // ─── Predict ────────────────────────────────────────────────────────────
@@ -154,7 +184,7 @@ function renderGauge(prob, riskLevel) {
 
   // Risk badge
   percentEl.style.color = riskLevel === 'High' ? '#ef4444' : riskLevel === 'Medium' ? '#f59e0b' : '#10b981';
-  badgeEl.textContent = riskLevel + ' Risk';
+  badgeEl.textContent = `You are at ${riskLevel.toUpperCase()} risk`;
   badgeEl.className = 'risk-badge risk-' + riskLevel.toLowerCase();
 }
 

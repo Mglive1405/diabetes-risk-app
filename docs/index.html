@@ -150,10 +150,13 @@
           <span class="form-hint">Adjust sensitivity — lower = more cautious</span>
         </div>
 
+        <!-- Error Banner -->
+        <div id="model-error" class="error-banner hidden"></div>
+
         <!-- Submit -->
         <div class="form-group full-width">
-          <button type="submit" class="submit-btn" id="submit-btn">
-            <span class="btn-text">Analyze Risk</span>
+          <button type="submit" class="submit-btn loading" id="submit-btn" disabled>
+            <span class="btn-text" id="btn-text">Loading Model...</span>
             <span class="btn-loader" id="btn-loader"></span>
             <svg class="btn-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
           </button>
@@ -188,6 +191,7 @@
         <!-- Feature Importance -->
         <div class="result-card importance-card">
           <h3 class="card-title">Key Contributing Factors</h3>
+          <p class="card-subtitle">Your risk is heavily influenced by:</p>
           <div class="importance-bars" id="importance-bars">
             <!-- Populated by JS -->
           </div>
