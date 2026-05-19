@@ -24,10 +24,10 @@ page = st.sidebar.radio(
 
 # Page routing
 if page == "Predict Risk":
-    from Pages import Predict_Risk
+    from pages import Predict_Risk
 elif page == "Model Evaluation":
-    from Pages import Model_Eval
+    from pages import Model_Eval
 elif page == "Global Insights":
-    from Pages import Insights
+    from pages import Insights
 elif page == "Model & App Info":
-    from Pages import Model_Info
+    from pages import Model_Info
