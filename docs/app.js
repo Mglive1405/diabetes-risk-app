@@ -61,10 +61,7 @@ async function predict(inputValues) {
   const feeds = {};
   feeds[session.inputNames[0]] = tensor;
   const results = await session.run(feeds);
-
-  // Output: probabilities tensor [1, 2] — class 0 and class 1
-  const probOutput = results[session.outputNames[1]];
-  const prob = probOutput.data[1]; // probability of diabetes (class 1)
+  const prob = results.probabilities.data[0];
   return prob;
 }
 
