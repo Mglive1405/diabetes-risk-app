@@ -152,14 +152,18 @@
             <label class="form-label"><span data-i18n="lbl_bmi">BMI</span> *</label>
             <button type="button" class="btn-idk" onclick="fillBMIDefault()" title="Uses average value" data-i18n="btn_idk">I don't know</button>
           </div>
-          <div class="bmi-calc">
+          
+          <div class="bmi-container">
             <div class="bmi-inputs">
-              <input type="number" id="height" class="form-input small" min="100" max="250" value="165" step="1" />
-              <input type="number" id="weight" class="form-input small" min="30" max="250" value="70" step="1" />
+              <input type="number" id="height" class="form-input" min="100" max="250" value="165" step="1" placeholder="Height (cm)" />
+              <input type="number" id="weight" class="form-input" min="30" max="250" value="70" step="1" placeholder="Weight (kg)" />
             </div>
-            <div class="bmi-result" id="bmi-display">
-              <span class="bmi-value" id="bmi-value">25.7</span>
-              <span class="bmi-label" data-i18n="lbl_bmi">BMI</span>
+            
+            <div class="bmi-result">
+              <label class="form-label" style="text-align: center; margin-bottom: 8px;">Your BMI</label>
+              <div class="bmi-box" id="bmi-display">
+                <span class="bmi-value" id="bmi-value">25.7</span>
+              </div>
             </div>
           </div>
           <span class="form-hint" data-i18n="hint_bmi">Auto-calculated from height & weight</span>
