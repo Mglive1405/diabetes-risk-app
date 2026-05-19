@@ -85,49 +85,73 @@
         </div>
 
         <div class="form-group" id="pregnancies-group">
-          <label class="form-label" for="pregnancies" data-i18n="lbl_preg">Pregnancies</label>
+          <div class="label-row">
+            <label class="form-label" for="pregnancies" data-i18n="lbl_preg">Pregnancies</label>
+            <button type="button" class="btn-idk" onclick="fillDefault('pregnancies', 0)" title="Uses average value" data-i18n="btn_idk">I don't know</button>
+          </div>
           <input type="number" id="pregnancies" class="form-input" min="0" max="20" value="1" step="1" />
           <span class="form-hint" data-i18n="hint_preg">Number of times pregnant</span>
         </div>
 
         <div class="form-group">
-          <label class="form-label" for="glucose"><span data-i18n="lbl_gluc">Glucose</span> * <span class="unit">(mg/dL)</span></label>
+          <div class="label-row">
+            <label class="form-label" for="glucose"><span data-i18n="lbl_gluc">Glucose</span> * <span class="unit">(mg/dL)</span></label>
+            <button type="button" class="btn-idk" onclick="fillDefault('glucose', 120)" title="Uses average value" data-i18n="btn_idk">I don't know</button>
+          </div>
           <input type="number" id="glucose" class="form-input" min="30" max="300" value="120" step="1" required />
           <span class="form-hint" data-i18n="hint_gluc">Blood sugar level</span>
         </div>
 
         <div class="form-group">
-          <label class="form-label" for="blood-pressure"><span data-i18n="lbl_bp">Blood Pressure</span> * <span class="unit">(mm Hg)</span></label>
+          <div class="label-row">
+            <label class="form-label" for="blood-pressure"><span data-i18n="lbl_bp">Blood Pressure</span> * <span class="unit">(mm Hg)</span></label>
+            <button type="button" class="btn-idk" onclick="fillDefault('blood-pressure', 70)" title="Uses average value" data-i18n="btn_idk">I don't know</button>
+          </div>
           <input type="number" id="blood-pressure" class="form-input" min="30" max="200" value="72" step="1" required />
           <span class="form-hint" data-i18n="hint_bp">Diastolic blood pressure</span>
         </div>
 
         <div class="form-group">
-          <label class="form-label" for="skin-thickness"><span data-i18n="lbl_skin">Skin Thickness</span> <span class="unit">(mm)</span></label>
+          <div class="label-row">
+            <label class="form-label" for="skin-thickness"><span data-i18n="lbl_skin">Skin Thickness</span> <span class="unit">(mm)</span></label>
+            <button type="button" class="btn-idk" onclick="fillDefault('skin-thickness', 20)" title="Uses average value" data-i18n="btn_idk">I don't know</button>
+          </div>
           <input type="number" id="skin-thickness" class="form-input" min="0" max="100" value="29" step="1" />
           <span class="form-hint" data-i18n="hint_skin">Triceps skin fold</span>
         </div>
 
         <div class="form-group">
-          <label class="form-label" for="insulin"><span data-i18n="lbl_ins">Insulin</span> <span class="unit">(uU/mL)</span></label>
+          <div class="label-row">
+            <label class="form-label" for="insulin"><span data-i18n="lbl_ins">Insulin</span> <span class="unit">(uU/mL)</span></label>
+            <button type="button" class="btn-idk" onclick="fillDefault('insulin', 80)" title="Uses average value" data-i18n="btn_idk">I don't know</button>
+          </div>
           <input type="number" id="insulin" class="form-input" min="0" max="900" value="126" step="1" />
           <span class="form-hint" data-i18n="hint_ins">2-hour serum insulin</span>
         </div>
 
         <div class="form-group">
-          <label class="form-label" for="dpf" data-i18n="lbl_dpf">Diabetes Pedigree</label>
+          <div class="label-row">
+            <label class="form-label" for="dpf" data-i18n="lbl_dpf">Diabetes Pedigree</label>
+            <button type="button" class="btn-idk" onclick="fillDefault('dpf', 0.5)" title="Uses average value" data-i18n="btn_idk">I don't know</button>
+          </div>
           <input type="number" id="dpf" class="form-input" min="0.05" max="2.5" value="0.50" step="0.01" />
           <span class="form-hint" data-i18n="hint_dpf">Genetic likelihood score</span>
         </div>
 
         <div class="form-group">
-          <label class="form-label" for="age"><span data-i18n="lbl_age">Age</span> *</label>
+          <div class="label-row">
+            <label class="form-label" for="age"><span data-i18n="lbl_age">Age</span> *</label>
+            <button type="button" class="btn-idk" onclick="fillDefault('age', 30)" title="Uses average value" data-i18n="btn_idk">I don't know</button>
+          </div>
           <input type="number" id="age" class="form-input" min="10" max="120" value="30" step="1" required />
           <span class="form-hint" data-i18n="hint_age">Your current age</span>
         </div>
 
         <div class="form-group">
-          <label class="form-label"><span data-i18n="lbl_bmi">BMI</span> *</label>
+          <div class="label-row">
+            <label class="form-label"><span data-i18n="lbl_bmi">BMI</span> *</label>
+            <button type="button" class="btn-idk" onclick="fillBMIDefault()" title="Uses average value" data-i18n="btn_idk">I don't know</button>
+          </div>
           <div class="bmi-calc">
             <div class="bmi-inputs">
               <input type="number" id="height" class="form-input small" min="100" max="250" value="165" step="1" />

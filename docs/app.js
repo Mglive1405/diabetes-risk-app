@@ -55,7 +55,7 @@ const TRANSLATIONS = {
     // Feature Labels
     feat_Pregnancies: 'Pregnancies', feat_Glucose: 'Glucose', feat_BloodPressure: 'Blood Pressure',
     feat_SkinThickness: 'Skin Thickness', feat_Insulin: 'Insulin', feat_BMI: 'BMI',
-    feat_DiabetesPedigreeFunction: 'Diabetes Pedigree', feat_Age: 'Age'
+    feat_DiabetesPedigreeFunction: 'Diabetes Pedigree', feat_Age: 'Age', btn_idk: "I don't know"
   },
   ar: {
     nav_home: "الرئيسية", nav_assess: "التقييم", nav_about: "حول",
@@ -95,7 +95,7 @@ const TRANSLATIONS = {
     
     feat_Pregnancies: 'الحمل', feat_Glucose: 'الجلوكوز', feat_BloodPressure: 'ضغط الدم',
     feat_SkinThickness: 'سمك الجلد', feat_Insulin: 'الأنسولين', feat_BMI: 'كتلة الجسم',
-    feat_DiabetesPedigreeFunction: 'الوراثة', feat_Age: 'العمر'
+    feat_DiabetesPedigreeFunction: 'الوراثة', feat_Age: 'العمر', btn_idk: "لا أعرف"
   }
 };
 
@@ -195,13 +195,28 @@ function setupGenderToggle() {
       btn.classList.add('active');
       currentGender = btn.dataset.gender;
       if (currentGender === 'male') {
-        pregGroup.style.display = 'none';
+        pregGroup.classList.add('hidden');
         document.getElementById('pregnancies').value = 0;
       } else {
-        pregGroup.style.display = '';
+        pregGroup.classList.remove('hidden');
       }
     });
   });
+}
+
+function fillDefault(id, val) {
+  const el = document.getElementById(id);
+  if (el) {
+    el.value = val;
+    el.style.backgroundColor = 'rgba(6, 182, 212, 0.1)';
+    setTimeout(() => el.style.backgroundColor = '', 1000);
+  }
+}
+
+function fillBMIDefault() {
+  fillDefault('height', 170);
+  fillDefault('weight', 72);
+  updateBMI();
 }
 
 function setupThreshold() {
@@ -218,6 +233,9 @@ function computeImportance(values) {
     const deviation = Math.abs(values[i] - AVERAGES[f]) / (AVERAGES[f] || 1);
     importances[f] = deviation;
   });
+  if (currentGender === 'male') {
+    delete importances['Pregnancies'];
+  }
   const max = Math.max(...Object.values(importances), 0.01);
   Object.keys(importances).forEach(k => { importances[k] = importances[k] / max; });
   return importances;
@@ -342,9 +360,13 @@ async function handleSubmit(e) {
 
   const bmi = updateBMI();
   const threshold = parseInt(document.getElementById('threshold').value) / 100;
+  let preg = parseFloat(document.getElementById('pregnancies').value) || 0;
+  if (currentGender === 'male') {
+    preg = 0;
+  }
 
   const values = [
-    parseFloat(document.getElementById('pregnancies').value) || 0,
+    preg,
     parseFloat(document.getElementById('glucose').value),
     parseFloat(document.getElementById('blood-pressure').value),
     parseFloat(document.getElementById('skin-thickness').value),

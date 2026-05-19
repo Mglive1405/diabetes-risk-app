@@ -132,9 +132,17 @@ body {
   gap: 24px;
 }
 .form-group.full-width { grid-column: 1 / -1; }
+.form-group { transition: opacity 0.3s ease, transform 0.3s ease, height 0.3s ease, padding 0.3s ease, margin 0.3s ease; overflow: hidden; opacity: 1; }
+.form-group.hidden { opacity: 0; transform: translateY(-10px); height: 0; padding-top: 0; padding-bottom: 0; margin-bottom: 0; border: none; }
+
+.label-row { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 8px; }
+.label-row .form-label { margin-bottom: 0; }
+.btn-idk { background: none; border: none; font-size: 0.75rem; color: var(--accent-1); cursor: pointer; opacity: 0.7; transition: var(--transition); font-family: var(--font); padding: 0 2px; }
+.btn-idk:hover { opacity: 1; text-decoration: underline; }
+
 .form-label {
   display: block; font-size: 0.85rem; font-weight: 600; color: var(--text-secondary);
-  margin-bottom: 8px; letter-spacing: 0.3px;
+  letter-spacing: 0.3px;
 }
 .form-label .unit { font-weight: 400; color: var(--text-muted); font-size: 0.8rem; }
 
@@ -163,15 +171,16 @@ body {
 .gender-icon { font-size: 1.1rem; }
 
 /* BMI Calc */
-.bmi-calc { display: flex; gap: 12px; align-items: center; }
-.bmi-inputs { display: flex; gap: 8px; flex: 1; }
+.bmi-calc { display: flex; gap: 16px; align-items: stretch; height: 48px; }
+.bmi-inputs { display: flex; gap: 12px; flex: 1; }
+.bmi-inputs .form-input { height: 100%; margin: 0; }
 .bmi-result {
-  display: flex; flex-direction: column; align-items: center;
-  padding: 8px 20px; border-radius: var(--radius-sm);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 0 20px; border-radius: var(--radius-sm);
   background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3);
-  min-width: 80px;
+  min-width: 90px; height: 100%;
 }
-.bmi-value { font-size: 1.3rem; font-weight: 700; color: var(--accent-2); }
+.bmi-value { font-size: 1.3rem; font-weight: 700; color: var(--accent-2); line-height: 1.2; }
 .bmi-label { font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
 
 /* Range Slider */
@@ -373,5 +382,6 @@ body {
 [dir="rtl"] .bmi-calc { flex-direction: row-reverse; }
 [dir="rtl"] .gender-toggle { flex-direction: row-reverse; }
 [dir="rtl"] .form-label, [dir="rtl"] .card-title, [dir="rtl"] .card-subtitle { text-align: right; }
+[dir="rtl"] .label-row { flex-direction: row-reverse; }
 [dir="rtl"] .form-input { text-align: right; }
 [dir="rtl"] .form-input[type="number"] { direction: ltr; text-align: right; }
