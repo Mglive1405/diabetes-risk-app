@@ -1,5 +1,12 @@
 /* ═══════════════ DiabetesIQ — Client-Side ML Inference ═══════════════ */
 
+// Configure ONNX Runtime Web WebAssembly path and settings globally before any session calls
+if (typeof ort !== 'undefined') {
+  ort.env.wasm.numThreads = 1;
+  ort.env.wasm.proxy = false;
+  ort.env.wasm.wasmPaths = './';
+}
+
 // ─── State ──────────────────────────────────────────────────────────────
 let session = null;
 let currentGender = 'female';
@@ -39,11 +46,6 @@ const HEALTH_TIPS = {
 // ─── Initialize ONNX ────────────────────────────────────────────────────
 async function initModel() {
   try {
-    // Configure ONNX Runtime Web WASM options
-    ort.env.wasm.numThreads = 1;
-    ort.env.wasm.proxy = false;
-    ort.env.wasm.wasmPaths = 'https://cdn.jsdelivr.net/npm/onnxruntime-web@1.17.0/dist/';
-    
     session = await ort.InferenceSession.create('./diabetes_model.onnx');
     console.log('ONNX model loaded successfully');
   } catch (e) {
