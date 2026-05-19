@@ -49,7 +49,7 @@ const HEALTH_TIPS = {
 async function initModel() {
   console.log('Model loading started...');
   try {
-    session = await ort.InferenceSession.create('../models/diabetes_model.onnx');
+    session = await ort.InferenceSession.create('./diabetes_model.onnx');
     console.log('ONNX model loaded successfully');
     
     // Hide UI error if model loads
