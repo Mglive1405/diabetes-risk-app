@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DiabetesIQ - AI-Powered Diabetes Risk Assessment</title>
+  <meta name="description" content="Free AI-powered diabetes risk assessment tool. Get instant predictions with explainable AI — no data leaves your browser." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🩺</text></svg>" />
+</head>
+<body>
+  <!-- ═══════════════ NAVBAR ═══════════════ -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="#" class="nav-logo">
+        <span class="logo-icon">🩺</span>
+        <span class="logo-text">Diabetes<span class="logo-accent">IQ</span></span>
+      </a>
+      <div class="nav-links">
+        <a href="#hero">Home</a>
+        <a href="#assess">Assess</a>
+        <a href="#about">About</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ═══════════════ HERO ═══════════════ -->
+  <section class="hero" id="hero">
+    <div class="hero-bg-orbs">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-badge">AI-Powered Health Tool</div>
+      <h1 class="hero-title">Know Your <span class="gradient-text">Diabetes Risk</span> in Seconds</h1>
+      <p class="hero-subtitle">
+        Our machine learning model analyzes your health metrics to predict diabetes risk —
+        completely private, running 100% in your browser.
+      </p>
+      <div class="hero-stats">
+        <div class="stat-card">
+          <span class="stat-value">82%</span>
+          <span class="stat-label">AUC Score</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value">778</span>
+          <span class="stat-label">Training Samples</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value">100%</span>
+          <span class="stat-label">Private</span>
+        </div>
+      </div>
+      <a href="#assess" class="hero-cta">
+        <span>Start Assessment</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- ═══════════════ ASSESSMENT FORM ═══════════════ -->
+  <section class="assess-section" id="assess">
+    <div class="section-container">
+      <div class="section-header">
+        <h2 class="section-title">Health <span class="gradient-text">Assessment</span></h2>
+        <p class="section-subtitle">Enter your medical information below. Fields marked with * are required. If you don't know a value, leave the default.</p>
+      </div>
+
+      <form id="prediction-form" class="prediction-form" autocomplete="off">
+        <!-- Gender Selection -->
+        <div class="form-group full-width">
+          <label class="form-label">Gender</label>
+          <div class="gender-toggle">
+            <button type="button" class="gender-btn active" data-gender="female" id="btn-female">
+              <span class="gender-icon">♀</span> Female
+            </button>
+            <button type="button" class="gender-btn" data-gender="male" id="btn-male">
+              <span class="gender-icon">♂</span> Male
+            </button>
+          </div>
+        </div>
+
+        <!-- Row 1 -->
+        <div class="form-group" id="pregnancies-group">
+          <label class="form-label" for="pregnancies">Pregnancies</label>
+          <input type="number" id="pregnancies" class="form-input" min="0" max="20" value="1" step="1" />
+          <span class="form-hint">Number of times pregnant</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="glucose">Glucose * <span class="unit">(mg/dL)</span></label>
+          <input type="number" id="glucose" class="form-input" min="30" max="300" value="120" step="1" required />
+          <span class="form-hint">Blood sugar level</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="blood-pressure">Blood Pressure * <span class="unit">(mm Hg)</span></label>
+          <input type="number" id="blood-pressure" class="form-input" min="30" max="200" value="72" step="1" required />
+          <span class="form-hint">Diastolic blood pressure</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="skin-thickness">Skin Thickness <span class="unit">(mm)</span></label>
+          <input type="number" id="skin-thickness" class="form-input" min="0" max="100" value="29" step="1" />
+          <span class="form-hint">Triceps skin fold</span>
+        </div>
+
+        <!-- Row 2 -->
+        <div class="form-group">
+          <label class="form-label" for="insulin">Insulin <span class="unit">(uU/mL)</span></label>
+          <input type="number" id="insulin" class="form-input" min="0" max="900" value="126" step="1" />
+          <span class="form-hint">2-hour serum insulin</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="dpf">Diabetes Pedigree</label>
+          <input type="number" id="dpf" class="form-input" min="0.05" max="2.5" value="0.50" step="0.01" />
+          <span class="form-hint">Genetic likelihood score</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="age">Age *</label>
+          <input type="number" id="age" class="form-input" min="10" max="120" value="30" step="1" required />
+          <span class="form-hint">Your current age</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">BMI *</label>
+          <div class="bmi-calc">
+            <div class="bmi-inputs">
+              <input type="number" id="height" class="form-input small" min="100" max="250" value="165" step="1" placeholder="Height cm" />
+              <input type="number" id="weight" class="form-input small" min="30" max="250" value="70" step="1" placeholder="Weight kg" />
+            </div>
+            <div class="bmi-result" id="bmi-display">
+              <span class="bmi-value" id="bmi-value">25.7</span>
+              <span class="bmi-label">BMI</span>
+            </div>
+          </div>
+          <span class="form-hint">Auto-calculated from height & weight</span>
+        </div>
+
+        <!-- Threshold -->
+        <div class="form-group full-width">
+          <label class="form-label" for="threshold">Risk Threshold: <span id="threshold-value">50%</span></label>
+          <input type="range" id="threshold" class="form-range" min="20" max="80" value="50" step="1" />
+          <span class="form-hint">Adjust sensitivity — lower = more cautious</span>
+        </div>
+
+        <!-- Submit -->
+        <div class="form-group full-width">
+          <button type="submit" class="submit-btn" id="submit-btn">
+            <span class="btn-text">Analyze Risk</span>
+            <span class="btn-loader" id="btn-loader"></span>
+            <svg class="btn-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ═══════════════ RESULTS ═══════════════ -->
+  <section class="results-section hidden" id="results">
+    <div class="section-container">
+      <div class="section-header">
+        <h2 class="section-title">Your <span class="gradient-text">Results</span></h2>
+      </div>
+
+      <div class="results-grid">
+        <!-- Risk Gauge -->
+        <div class="result-card gauge-card">
+          <div class="gauge-container">
+            <svg class="gauge-svg" viewBox="0 0 200 200" id="gauge-svg">
+              <circle class="gauge-bg" cx="100" cy="100" r="85" />
+              <circle class="gauge-fill" cx="100" cy="100" r="85" id="gauge-fill" />
+            </svg>
+            <div class="gauge-center">
+              <span class="gauge-percent" id="gauge-percent">0%</span>
+              <span class="gauge-label" id="gauge-label">Risk</span>
+            </div>
+          </div>
+          <div class="risk-badge" id="risk-badge">Analyzing...</div>
+        </div>
+
+        <!-- Feature Importance -->
+        <div class="result-card importance-card">
+          <h3 class="card-title">Key Contributing Factors</h3>
+          <div class="importance-bars" id="importance-bars">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <!-- Health Tips -->
+        <div class="result-card tips-card">
+          <h3 class="card-title">Personalized Health Tips</h3>
+          <div class="tips-list" id="tips-list">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="results-actions">
+        <button class="action-btn" id="btn-new" onclick="resetForm()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 4v6h6"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+          New Assessment
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ ABOUT ═══════════════ -->
+  <section class="about-section" id="about">
+    <div class="section-container">
+      <div class="section-header">
+        <h2 class="section-title">About <span class="gradient-text">DiabetesIQ</span></h2>
+      </div>
+      <div class="about-grid">
+        <div class="about-card">
+          <div class="about-icon">🧠</div>
+          <h3>AI-Powered</h3>
+          <p>Gradient Boosting model trained on 778 clinical records with proper cross-validation. ROC AUC: 0.82.</p>
+        </div>
+        <div class="about-card">
+          <div class="about-icon">🔒</div>
+          <h3>100% Private</h3>
+          <p>All predictions run in your browser using ONNX Runtime. Your data never leaves your device.</p>
+        </div>
+        <div class="about-card">
+          <div class="about-icon">📊</div>
+          <h3>Explainable</h3>
+          <p>See which health metrics contribute most to your risk score with feature importance analysis.</p>
+        </div>
+        <div class="about-card">
+          <div class="about-icon">⚡</div>
+          <h3>Instant Results</h3>
+          <p>Get your risk assessment in milliseconds. No server requests, no waiting, no sign-ups.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ FOOTER ═══════════════ -->
+  <footer class="footer">
+    <div class="section-container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <span class="logo-icon">🩺</span>
+          <span class="logo-text">Diabetes<span class="logo-accent">IQ</span></span>
+        </div>
+        <p class="footer-disclaimer">
+          <strong>Disclaimer:</strong> This tool is for educational purposes only and is not a substitute for professional medical advice, diagnosis, or treatment. Always consult a healthcare provider for medical concerns.
+        </p>
+        <p class="footer-copy">&copy; 2026 DiabetesIQ. Built with ML &amp; ONNX Runtime Web.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══════════════ SCRIPTS ═══════════════ -->
+  <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.17.0/dist/ort.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
